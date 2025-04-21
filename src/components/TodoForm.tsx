@@ -1,11 +1,4 @@
-import {
-	TextField,
-	Button,
-	Card,
-	CardContent,
-	Chip,
-	IconButton,
-} from "@mui/material";
+import { TextField, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Task } from "../interface/task.interface";
 import { useState } from "react";
@@ -14,6 +7,7 @@ interface TodoFormProps {
 	task: Task;
 	onValueChange: (newValue: string) => void;
 	onAddTask: (task: Task) => void;
+	onClose?: () => void;
 }
 
 function TodoToggleButton({ onToggleButton }: { onToggleButton: () => void }) {
@@ -24,37 +18,37 @@ function TodoToggleButton({ onToggleButton }: { onToggleButton: () => void }) {
 	);
 }
 
-function TodoInput({ task, onAddTask, onValueChange }: TodoFormProps) {
+function TodoInput({ task, onAddTask, onValueChange, onClose }: TodoFormProps) {
 	return (
-		<Card>
-			<CardContent>
-				<div className="flex justify-between items-center w-full">
-					<div>
-						<TextField
-							id="outlined-basic"
-							label="Outlined"
-							variant="outlined"
-							value={task.name}
-							className="w-full"
-							onChange={(e) => onValueChange(e.target.value)}
-						/>
-					</div>
+		<div className="todo-input">
+			<div className="flex justify-between items-center w-full">
+				<div className="todo-input__left">
+					<TextField
+						id="outlined-basic"
+						label="Name of the task"
+						variant="standard"
+						size="small"
+						fullWidth
+						value={task.name}
+						onChange={(e) => onValueChange(e.target.value)}
+					/>
+				</div>
 
-					<div>
-						{!task.name.trim() ? (
-							<Button disabled variant="contained">
-								Write first
-							</Button>
-						) : (
-							<Button onClick={() => onAddTask(task)} variant="contained">
-								Add tasks
-							</Button>
-						)}
+				<div>
+					{!task.name.trim() ? (
+						<Button disabled variant="contained">
+							Write first
+						</Button>
+					) : (
+						<Button onClick={() => onAddTask(task)} variant="contained">
+							Add tasks
+						</Button>
+					)}
 
-						<IconButton aria-label="delete">
-							<CloseIcon />
-						</IconButton>
-						{/* 
+					<IconButton onClick={() => onClose?.()} aria-label="delete">
+						<CloseIcon />
+					</IconButton>
+					{/* 
             disabled props
             <Button
 							disabled={!task.name.trim()}
@@ -63,10 +57,9 @@ function TodoInput({ task, onAddTask, onValueChange }: TodoFormProps) {
 						>
 							Add Tasks
 						</Button> */}
-					</div>
 				</div>
-			</CardContent>
-		</Card>
+			</div>
+		</div>
 	);
 }
 
@@ -81,31 +74,18 @@ const TodoForm: React.FC<TodoFormProps> = ({
 		setShowInput(!showInput);
 	}
 	return (
-		<Card>
-			<CardContent>
-				<div className="flex items-center w-full">
-					<div>Task todo</div>
-					<Chip
-						style={{
-							marginLeft: "20px",
-						}}
-						label="Done"
-						color="primary"
-					/>
-				</div>
-				<div className="flex justify-between items-center w-full">
-					{showInput ? (
-						<TodoInput
-							task={task}
-							onAddTask={onAddTask}
-							onValueChange={onValueChange}
-						/>
-					) : (
-						<TodoToggleButton onToggleButton={handleToggle} />
-					)}
-				</div>
-			</CardContent>
-		</Card>
+		<div className="flex justify-between items-center w-full">
+			{showInput ? (
+				<TodoInput
+					task={task}
+					onAddTask={onAddTask}
+					onValueChange={onValueChange}
+					onClose={handleToggle}
+				/>
+			) : (
+				<TodoToggleButton onToggleButton={handleToggle} />
+			)}
+		</div>
 	);
 };
 
