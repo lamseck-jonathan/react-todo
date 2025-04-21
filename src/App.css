@@ -28,12 +28,20 @@
 	border-radius: 10px;
 	padding: 10px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .main-title {
 	font-size: 24px;
 	font-weight: 600;
 	color: #213547;
+}
+
+.todo-container {
+	padding: 10px 20px 20px 20px;
+	border: 1px solid #e0e0e0;
+	border-radius: 10px;
+	margin: 10px 0 20px 0;
 }
 
 /*
