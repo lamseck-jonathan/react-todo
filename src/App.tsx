@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 import MainLayout from "./layouts/MainLayout";
 import { getEmptyTask } from "./utils/getEmptyTask.util";
@@ -28,11 +28,22 @@ function App() {
 		setTask({ name: newValue, isDone: false });
 	};
 
+	const todoTasks = useMemo(
+		() => tasks.filter((task) => !task.isDone),
+		[tasks]
+	);
+	const doneTasks = useMemo(() => tasks.filter((task) => task.isDone), [tasks]);
+
 	return (
 		<MainLayout>
 			<div>Task of the day</div>
 			<div className="py-8 w-full">
-				<TodoContainer title="TO DO" status="Done">
+				<TodoContainer
+					title="TO DO"
+					status={
+						todoTasks.length + (todoTasks.length > 1 ? " tasks" : " task")
+					}
+				>
 					<TodoForm
 						task={task}
 						onValueChange={handleValueChange}
@@ -48,7 +59,12 @@ function App() {
 					</ul>
 				</TodoContainer>
 
-				<TodoContainer title="DONE" status="Done">
+				<TodoContainer
+					title="DONE"
+					status={
+						doneTasks.length + (doneTasks.length > 1 ? " tasks" : " task")
+					}
+				>
 					<ul className="flex flex-col gap-4 w-full">
 						<TaskList onToggle={handleToggleTask} tasks={tasks} isDone={true} />
 					</ul>
