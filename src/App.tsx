@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./App.css";
 import MainLayout from "./layouts/MainLayout";
-import TodoItem from "./components/TodoItem";
-import { Task } from "./interface/task.interface";
 import { getEmptyTask } from "./utils/getEmptyTask.util";
 import TodoForm from "./components/TodoForm";
+import TodoContainer from "./components/TodoContainer";
+import TaskList from "./components/TaskList";
+import { Task } from "./interface/task.interface";
 
 function App() {
 	const [task, setTask] = useState<Task>(getEmptyTask());
@@ -31,22 +32,28 @@ function App() {
 		<MainLayout>
 			<div>Task of the day</div>
 			<div className="py-8 w-full">
-				<TodoForm
-					task={task}
-					onValueChange={handleValueChange}
-					onAddTask={handleAddTask}
-				/>
-			</div>
-
-			<ul className="flex flex-col gap-4 w-full">
-				{tasks.map((task, index) => (
-					<TodoItem
+				<TodoContainer title="TO DO" status="Done">
+					<TodoForm
 						task={task}
-						onToggle={() => handleToggleTask(task)}
-						key={index}
+						onValueChange={handleValueChange}
+						onAddTask={handleAddTask}
 					/>
-				))}
-			</ul>
+
+					<ul className="flex flex-col gap-4 w-full">
+						<TaskList
+							onToggle={handleToggleTask}
+							tasks={tasks}
+							isDone={false}
+						/>
+					</ul>
+				</TodoContainer>
+
+				<TodoContainer title="DONE" status="Done">
+					<ul className="flex flex-col gap-4 w-full">
+						<TaskList onToggle={handleToggleTask} tasks={tasks} isDone={true} />
+					</ul>
+				</TodoContainer>
+			</div>
 		</MainLayout>
 	);
 }
