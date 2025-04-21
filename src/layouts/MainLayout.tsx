@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, Container, Button } from "@mui/material";
+import { AppBar, Toolbar, Typography, Container } from "@mui/material";
 
 export default function MainLayout({
 	children,
@@ -11,9 +11,8 @@ export default function MainLayout({
 			<AppBar position="static">
 				<Toolbar>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						MyTasks
+						TickTask React
 					</Typography>
-					<Button color="inherit">Login</Button>
 				</Toolbar>
 			</AppBar>
 
@@ -32,7 +31,7 @@ export default function MainLayout({
 				}}
 			>
 				<Typography variant="body2" color="textSecondary">
-					© 2024 My App. All rights reserved.
+					© 2025 Company Lam Seck. All rights reserved.
 				</Typography>
 			</footer>
 		</div>
