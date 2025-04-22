@@ -1,5 +1,5 @@
-import { Card, Checkbox } from "@mui/material";
 import { Task } from "../interface/task.interface";
+import { Card, Checkbox } from "@mui/material";
 
 interface TodoItemProps {
 	task: Task;
@@ -9,12 +9,11 @@ interface TodoItemProps {
 const TodoItem: React.FC<TodoItemProps> = ({ task, onToggle }) => {
 	return (
 		<>
-			<Card
-				className="flex justify-between items-center pl-4 pr-8 w-full"
-				variant="outlined"
-			>
-				<Checkbox checked={task.isDone} onChange={() => onToggle(task)} />
-				<div className={task.isDone ? "task-done" : ""}>{task.name}</div>
+			<Card className="flex items-center pl-4 pr-8 w-full" variant="outlined">
+				<span className="flex items-center w-full">
+					<Checkbox checked={task.isDone} onChange={() => onToggle(task)} />
+					<div className={task.isDone ? "task-done" : ""}>{task.name}</div>
+				</span>
 			</Card>
 		</>
 	);
