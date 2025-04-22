@@ -65,7 +65,7 @@ function App() {
 						doneTasks.length + (doneTasks.length > 1 ? " tasks" : " task")
 					}
 				>
-					<ul className="flex flex-col gap-4 w-full">
+					<ul className="flex flex-col gap-4 w-full mt-10">
 						<TaskList onToggle={handleToggleTask} tasks={tasks} isDone={true} />
 					</ul>
 				</TodoContainer>

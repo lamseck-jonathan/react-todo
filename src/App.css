@@ -31,6 +31,14 @@
 	margin-bottom: 10px;
 }
 
+.todo-input__add-task {
+	cursor: pointer;
+}
+
+.mt-10 {
+	margin-top: 10px;
+}
+
 .main-title {
 	font-size: 24px;
 	font-weight: 600;

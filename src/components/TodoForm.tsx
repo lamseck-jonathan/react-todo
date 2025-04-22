@@ -1,5 +1,6 @@
 import { TextField, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
 import { Task } from "../interface/task.interface";
 import { useState } from "react";
 
@@ -12,9 +13,14 @@ interface TodoFormProps {
 
 function TodoToggleButton({ onToggleButton }: { onToggleButton: () => void }) {
 	return (
-		<Button onClick={() => onToggleButton()} variant="contained">
-			Add Tasks
-		</Button>
+		<div className="todo-input" onClick={() => onToggleButton()}>
+			<span className="todo-input__add-task">
+				<IconButton aria-label="delete">
+					<AddIcon />
+				</IconButton>
+				Add Tasks
+			</span>
+		</div>
 	);
 }
 
@@ -35,28 +41,17 @@ function TodoInput({ task, onAddTask, onValueChange, onClose }: TodoFormProps) {
 				</div>
 
 				<div>
-					{!task.name.trim() ? (
-						<Button disabled variant="contained">
-							Write first
-						</Button>
-					) : (
-						<Button onClick={() => onAddTask(task)} variant="contained">
-							Add tasks
-						</Button>
-					)}
+					<Button
+						disabled={!task.name.trim()}
+						onClick={() => onAddTask(task)}
+						variant="contained"
+					>
+						Add tasks
+					</Button>
 
 					<IconButton onClick={() => onClose?.()} aria-label="delete">
 						<CloseIcon />
 					</IconButton>
-					{/* 
-            disabled props
-            <Button
-							disabled={!task.name.trim()}
-							onClick={() => onAddTask(task)}
-							variant="contained"
-						>
-							Add Tasks
-						</Button> */}
 				</div>
 			</div>
 		</div>
@@ -73,6 +68,11 @@ const TodoForm: React.FC<TodoFormProps> = ({
 	function handleToggle() {
 		setShowInput(!showInput);
 	}
+
+	function handleClose() {
+		onValueChange("");
+		setShowInput(false);
+	}
 	return (
 		<div className="flex justify-between items-center w-full">
 			{showInput ? (
@@ -80,7 +80,7 @@ const TodoForm: React.FC<TodoFormProps> = ({
 					task={task}
 					onAddTask={onAddTask}
 					onValueChange={onValueChange}
-					onClose={handleToggle}
+					onClose={handleClose}
 				/>
 			) : (
 				<TodoToggleButton onToggleButton={handleToggle} />
